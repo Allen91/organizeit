@@ -1,0 +1,30 @@
+.navbar {
+    background-color: #2f4e91;
+    margin-bottom: 30px
+}
+
+.home > .navbar{
+    margin-bottom: 0px
+}
+
+.navbar-brand.btn{
+    background-color: #2f4e91;
+    border: none;
+    color: #fff;
+}
+
+.navbar-brand.btn:hover{
+    background-color: #fff;
+    border: none;
+    color: #2f4e91;
+}
+
+.btn, .btn:focus{
+    background-color: #2f4e91;
+    color: #fff;
+}
+
+.btn:hover{
+    background-color: #fff;
+    color: #2f4e91;
+}

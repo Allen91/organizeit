@@ -4,3 +4,6 @@
 /resources/public/js/compiled
 out
 .*.swp
+*.xml
+*.iml
+.gitignore
