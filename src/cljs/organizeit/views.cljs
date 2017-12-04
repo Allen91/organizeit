@@ -14,7 +14,22 @@
   [bs/navbar {:fluid true}
    [bs/navbar-header
     [bs/navbar-brand
-     [bs/button {:on-click #(rf/dispatch [:load-page home-page])} "Organize it!"]]]]
+     [bs/button {:on-click #(rf/dispatch [:load-page home-page])} "OrganizeIt!"]]]])
+
+
+(defn mailbox-panel
+  []
+  [bs/panel {:header "Mailbox" :class :text-center}
+   [bs/button {:on-click #(rf/dispatch [:update-mailbox])} "Checked Mailbox"]
+   [:p {:style {:margin-top "20px"}}"Last checked: " [:strong bold @(rf/subscribe [:mailbox-time])]]])
+
+(defn main-panel
+  []
+  [bs/panel {:header "Groceries"}
+   [bs/table
+    [:tbody
+     [:tr
+      [:td "Milk"]]]]]
   )
 
 (defn home-page
@@ -33,12 +48,6 @@
    [bs/grid {:fluid false}
     [bs/row
      [bs/col {:md 8}
-      [bs/panel {:header "Groceries"}
-       [bs/table
-        [:tbody
-         [:tr
-          [:td "Milk"]]]]]]
+      [main-panel]]
      [bs/col {:md 4}
-      [bs/panel {:header "Mailbox" :class :text-center}
-       [bs/button {:on-click #(rf/dispatch [:update-mailbox])} "Checked Mailbox"]
-       [:p {:style {:margin-top "20px"}}"Last checked: " [:strong bold @(rf/subscribe [:mailbox-time])]]]]]]])
+      [mailbox-panel]]]]])

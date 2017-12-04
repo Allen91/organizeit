@@ -1,5 +1,5 @@
 (defproject organizeit "0.1.0-SNAPSHOT"
-  :description "Organize It"
+  :description "OrganizeIt"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.908"]
                  [org.clojure/core.async  "0.3.443"]

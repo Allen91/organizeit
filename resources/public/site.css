@@ -7,7 +7,7 @@
     margin-bottom: 0px
 }
 
-.navbar-brand.btn{
+.navbar-brand.btn, .navbar-brand.btn:focus{
     background-color: #2f4e91;
     border: none;
     color: #fff;
