@@ -7,6 +7,14 @@
     margin-bottom: 0px
 }
 
+.margin-top-20{
+    margin-top: 20px
+}
+
+.margin-bottom-30{
+    margin-bottom: 30px
+}
+
 .navbar-brand.btn, .navbar-brand.btn:focus{
     background-color: #2f4e91;
     border: none;
@@ -27,4 +35,12 @@
 .btn:hover{
     background-color: #fff;
     color: #2f4e91;
+}
+
+.main-color{
+    color: #2f4e91
+}
+
+.jumbotron{
+    padding: 50px
 }

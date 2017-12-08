@@ -6,4 +6,4 @@ out
 .*.swp
 *.xml
 *.iml
-.gitignore
+.nrepl-port

@@ -28,7 +28,7 @@
                          :pretty-print true}}]}
   :figwheel {:http-server-root "public" ;; default and assumes "resources"
              :server-port 3448 ;; default
-             :server-ip "127.0.0.1"
+             :server-ip "0.0.0.0"
 
              ;;:css-dirs ["resources/public/css"] ;; watch and update CSS
              ;; Start an nREPL server into the running figwheel process

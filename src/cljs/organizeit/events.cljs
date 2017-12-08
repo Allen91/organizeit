@@ -9,8 +9,8 @@
   :initialize
   (fn [_ _]
     {:route-page views/home-page
-     :mailbox-time "N/A"
-     }))
+     :mailbox-time "N/A"}))
+
 
 (rf/reg-event-db
   :load-page
@@ -20,4 +20,8 @@
 (rf/reg-event-db
   :update-mailbox
   (fn [db [_ _]]
-    (assoc db :mailbox-time (first (clojure.string/split (str (js/Date.)) #" GMT")))))
+    (-> (js/Date.)
+        str
+        (.split " GMT")
+        first
+        (->> (assoc db :mailbox-time)))))
