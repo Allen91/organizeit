@@ -12,3 +12,18 @@
   :mailbox-time
   (fn [db _]
     (:mailbox-time db)))
+
+(rf/reg-sub
+  :rent-last-paid
+  (fn [db _]
+    (:rent-last-paid db)))
+
+(rf/reg-sub
+  :electricity-last-paid
+  (fn [db _]
+    (:electricity-last-paid db)))
+
+(rf/reg-sub
+  :internet-last-paid
+  (fn [db _]
+    (:internet-last-paid db)))

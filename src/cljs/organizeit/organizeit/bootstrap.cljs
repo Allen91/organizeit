@@ -13,3 +13,4 @@
 (def col (r/adapt-react-class (.-Col js/ReactBootstrap)))
 (def table (r/adapt-react-class (.-Table js/ReactBootstrap)))
 (def jumbotron (r/adapt-react-class (.-Jumbotron js/ReactBootstrap)))
+(def checkbox (r/adapt-react-class (.-Checkbox js/ReactBootstrap)))

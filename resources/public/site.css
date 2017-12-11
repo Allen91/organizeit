@@ -11,6 +11,10 @@
     margin-top: 20px
 }
 
+.margin-left-20{
+    margin-left: 20px
+}
+
 .margin-bottom-30{
     margin-bottom: 30px
 }
@@ -43,4 +47,8 @@
 
 .jumbotron{
     padding: 50px
+}
+
+.item-textbox{
+    width: -webkit-fill-available
 }
