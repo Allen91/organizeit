@@ -10,7 +10,7 @@
   :plugins [[lein-figwheel "0.5.13"]
             [lein-cljsbuild "1.1.1"]]
   :resource-paths ["resources" "src/cljs"]
-  :cljsbuild {}
+  :cljsbuild {
     :builds [{
               :id "dev"
               :source-paths ["src/cljs"]
@@ -25,10 +25,10 @@
                          :output-to "resources/public/js/compiled/core.js"
                          :output-dir "resources/public/js/compiled/out"
                          :optimizations :none
-                         :pretty-print true}}]
+                         :pretty-print true}}]}
   :figwheel {:http-server-root "public" ;; default and assumes "resources"
              :server-port 3448 ;; default
-             :server-ip "0.0.0.0"})
+             :server-ip "0.0.0.0"
 
              ;;:css-dirs ["resources/public/css"] ;; watch and update CSS
              ;; Start an nREPL server into the running figwheel process
@@ -62,3 +62,4 @@
 
              ;; to pipe all the output to the repl
              ;; :server-logfile false
+             })
