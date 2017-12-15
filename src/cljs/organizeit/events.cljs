@@ -1,9 +1,19 @@
 (ns organizeit.events
   (:require [reagent.core :as r]
             [re-frame.core :as rf]
-            [clojure.string :as str]
             [organizeit.views :as views]
+            [cljs-time.local :refer [local-now]]
+            [cljs-time.format :refer [formatter unparse]]
             [organizeit.components.bootstrap :as bs]))
+
+(def common-formatter
+  "Custom datetime formatter"
+  (formatter "MMMM dd yyyy"))
+
+(def mailbox-formatter
+  "Custom datetime formatter"
+  (formatter "MMMM dd yyyy' at 'HH:mm"))
+
 
 (rf/reg-event-db
   :initialize
@@ -23,35 +33,19 @@
 (rf/reg-event-db
   :update-mailbox
   (fn [db [_ _]]
-    (-> (js/Date.)
-        str
-        (.split #" GMT")
-        first
-        (->> (assoc db :mailbox-time)))))
+    (assoc db :mailbox-time (unparse mailbox-formatter (local-now)))))
 
 (rf/reg-event-db
   :paid-rent
   (fn [db [_ _]]
-    (-> (js/Date.)
-        str
-        (.split #" \d\d:")
-        first
-        (->> (assoc db :rent-last-paid)))))
+    (assoc db :rent-last-paid (unparse common-formatter (local-now)))))
 
 (rf/reg-event-db
   :paid-electricity
   (fn [db [_ _]]
-    (-> (js/Date.)
-        str
-        (.split #" \d\d:")
-        first
-        (->> (assoc db :electricity-last-paid)))))
+    (assoc db :electricity-last-paid (unparse common-formatter (local-now)))))
 
 (rf/reg-event-db
   :paid-internet
   (fn [db [_ _]]
-    (-> (js/Date.)
-        str
-        (.split #" \d\d:")
-        first
-        (->> (assoc db :internet-last-paid)))))
+    (assoc db :internet-last-paid (unparse common-formatter (local-now)))))

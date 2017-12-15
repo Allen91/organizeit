@@ -5,6 +5,7 @@
                  [org.clojure/core.async  "0.3.443"]
                  [reagent "0.6.1"]
                  [re-frame "0.10.1"]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
                  [cljsjs/react-bootstrap "0.31.0-0" :exclusions [cljsjs/react]]]
 
   :plugins [[lein-figwheel "0.5.13"]
