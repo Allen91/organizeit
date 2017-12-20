@@ -2,16 +2,15 @@
   (:require [reagent.core :as r]
             [re-frame.core :as rf]
             [organizeit.views :as views]
+            [cljs-time.core :refer [plus months]]
             [cljs-time.local :refer [local-now]]
             [cljs-time.format :refer [formatter unparse]]
             [organizeit.components.bootstrap :as bs]))
 
 (def common-formatter
-  "Custom datetime formatter"
-  (formatter "MMMM dd yyyy"))
+  (formatter "MMMM yyyy"))
 
 (def mailbox-formatter
-  "Custom datetime formatter"
   (formatter "MMMM dd yyyy' at 'HH:mm"))
 
 
@@ -36,16 +35,31 @@
     (assoc db :mailbox-time (unparse mailbox-formatter (local-now)))))
 
 (rf/reg-event-db
-  :paid-rent
+  :paid-current-rent
   (fn [db [_ _]]
     (assoc db :rent-last-paid (unparse common-formatter (local-now)))))
 
 (rf/reg-event-db
-  :paid-electricity
+  :paid-next-rent
+  (fn [db [_ _]]
+    (assoc db :rent-last-paid (unparse common-formatter (plus (local-now) (months 1))))))
+
+(rf/reg-event-db
+  :paid-current-electricity
   (fn [db [_ _]]
     (assoc db :electricity-last-paid (unparse common-formatter (local-now)))))
 
 (rf/reg-event-db
-  :paid-internet
+  :paid-next-electricity
+  (fn [db [_ _]]
+    (assoc db :electricity-last-paid (unparse common-formatter (plus (local-now) (months 1))))))
+
+(rf/reg-event-db
+  :paid-current-internet
   (fn [db [_ _]]
     (assoc db :internet-last-paid (unparse common-formatter (local-now)))))
+
+(rf/reg-event-db
+  :paid-next-internet
+  (fn [db [_ _]]
+    (assoc db :internet-last-paid (unparse common-formatter (plus (local-now) (months 1))))))

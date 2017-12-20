@@ -3,6 +3,10 @@
     margin-bottom: 30px
 }
 
+.panel-heading{
+   font-weight: bold
+}
+
 .home > .navbar{
     margin-bottom: 0px
 }

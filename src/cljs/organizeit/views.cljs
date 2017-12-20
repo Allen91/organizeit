@@ -29,25 +29,28 @@
   []
   [bs/panel {:header "Mailbox" :class :text-center}
    [bs/button {:on-click #(rf/dispatch [:update-mailbox])} "Checked Mailbox"]
-   [:p {:class "margin-top-20"}"Last checked: " [:strong bold @(rf/subscribe [:mailbox-time])]]])
+   [:p {:class "margin-top-20"}"Last checked on " [:strong bold @(rf/subscribe [:mailbox-time])]]])
 
 (defn rent-panel
   []
   [bs/panel {:header "Rent" :class :text-center}
-   [bs/button {:on-click #(rf/dispatch [:paid-rent])} "Paid Rent"]
-   [:p {:class "margin-top-20"}"Last paid on " [:strong bold @(rf/subscribe [:rent-last-paid])]]])
+   [bs/button {:on-click #(rf/dispatch [:paid-current-rent])} "Paid current month"]
+   [bs/button {:class "margin-left-20" :on-click #(rf/dispatch [:paid-next-rent])} "Paid next month"]
+   [:p {:class "margin-top-20"}"Paid for " [:strong bold @(rf/subscribe [:rent-last-paid])]]])
 
 (defn electricity-panel
   []
   [bs/panel {:header "Electricity Bill" :class :text-center}
-   [bs/button {:on-click #(rf/dispatch [:paid-electricity])} "Paid the Electricity bill"]
-   [:p {:class "margin-top-20"}"Last paid on " [:strong bold @(rf/subscribe [:electricity-last-paid])]]])
+   [bs/button {:on-click #(rf/dispatch [:paid-current-electricity])} "Paid current month"]
+   [bs/button {:class "margin-left-20" :on-click #(rf/dispatch [:paid-next-electricity])} "Paid next month"]
+   [:p {:class "margin-top-20"}"Paid for " [:strong bold @(rf/subscribe [:electricity-last-paid])]]])
 
 (defn internet-panel
   []
   [bs/panel {:header "Internet Bill" :class :text-center}
-   [bs/button {:on-click #(rf/dispatch [:paid-internet])} "Paid the Internet bill"]
-   [:p {:class "margin-top-20"}"Last paid on " [:strong bold @(rf/subscribe [:internet-last-paid])]]])
+   [bs/button {:on-click #(rf/dispatch [:paid-current-internet])} "Paid current month"]
+   [bs/button {:class "margin-left-20" :on-click #(rf/dispatch [:paid-next-internet])} "Paid next month"]
+   [:p {:class "margin-top-20"}"Paid for " [:strong bold @(rf/subscribe [:internet-last-paid])]]])
 
 (defn main-panel
   []

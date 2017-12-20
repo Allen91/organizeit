@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0eb64d4b-3aa0-40b1-930f-76cec1f74352" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project.clj" afterPath="$PROJECT_DIR$/project.clj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/public/site.css" afterPath="$PROJECT_DIR$/resources/public/site.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cljs/organizeit/events.cljs" afterPath="$PROJECT_DIR$/src/cljs/organizeit/events.cljs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cljs/organizeit/views.cljs" afterPath="$PROJECT_DIR$/src/cljs/organizeit/views.cljs" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,21 +16,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="events.cljs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/cljs/organizeit/events.cljs">
+      <file leaf-file-name="views.cljs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cljs/organizeit/views.cljs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="793">
-              <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+            <state relative-caret-position="198">
+              <caret line="31" column="47" lean-forward="false" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project.clj" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project.clj">
+      <file leaf-file-name="site.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/public/site.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="35" />
+            <state relative-caret-position="17">
+              <caret line="6" column="14" lean-forward="false" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="events.cljs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cljs/organizeit/events.cljs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="799">
+              <caret line="47" column="16" lean-forward="false" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -62,10 +72,10 @@
         <option value="$PROJECT_DIR$/resources/public/index.html" />
         <option value="$PROJECT_DIR$/src/cljs/organizeit/subs.cljs" />
         <option value="$PROJECT_DIR$/src/cljs/organizeit/organizeit/bootstrap.cljs" />
-        <option value="$PROJECT_DIR$/resources/public/site.css" />
-        <option value="$PROJECT_DIR$/src/cljs/organizeit/views.cljs" />
         <option value="$PROJECT_DIR$/project.clj" />
+        <option value="$PROJECT_DIR$/src/cljs/organizeit/views.cljs" />
         <option value="$PROJECT_DIR$/src/cljs/organizeit/events.cljs" />
+        <option value="$PROJECT_DIR$/resources/public/site.css" />
       </list>
     </option>
   </component>
@@ -165,7 +175,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../cljs-react-bootstrap/cljs-react-bootstrap" />
   </component>
-  <component name="ReplState" timestamp="1513378400495">{:repl-history {:ide [], :local [], :remote []}}</component>
+  <component name="ReplState" timestamp="1513736412683">{:repl-history {:ide [], :local [], :remote []}}</component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -291,7 +301,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="REPL" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.23560767" sideWeight="0.5043478" order="5" side_tool="true" content_ui="tabs" x="0" y="23" width="1916" height="1017" />
+      <window_info id="REPL" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.23560767" sideWeight="0.5043478" order="5" side_tool="true" content_ui="tabs" x="9" y="32" width="1902" height="999" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23560767" sideWeight="0.49565217" order="6" side_tool="false" content_ui="tabs" />
@@ -455,22 +465,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/public/site.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="844">
-          <caret line="52" column="11" lean-forward="false" selection-start-line="52" selection-start-column="11" selection-end-line="52" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cljs/organizeit/views.cljs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="30" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/cljs/organizeit/subs.cljs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -489,8 +483,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cljs/organizeit/events.cljs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="793">
-          <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state relative-caret-position="799">
+          <caret line="47" column="16" lean-forward="false" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cljs/organizeit/views.cljs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="31" column="47" lean-forward="false" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/public/site.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="6" column="14" lean-forward="false" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
           <folding />
         </state>
       </provider>
