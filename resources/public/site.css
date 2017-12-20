@@ -1,0 +1,58 @@
+.navbar {
+    background-color: #2f4e91;
+    margin-bottom: 30px
+}
+
+.panel-heading{
+   font-weight: bold
+}
+
+.home > .navbar{
+    margin-bottom: 0px
+}
+
+.margin-top-20{
+    margin-top: 20px
+}
+
+.margin-left-20{
+    margin-left: 20px
+}
+
+.margin-bottom-30{
+    margin-bottom: 30px
+}
+
+.navbar-brand.btn, .navbar-brand.btn:focus{
+    background-color: #2f4e91;
+    border: none;
+    color: #fff;
+}
+
+.navbar-brand.btn:hover{
+    background-color: #fff;
+    border: none;
+    color: #2f4e91;
+}
+
+.btn, .btn:focus{
+    background-color: #2f4e91;
+    color: #fff;
+}
+
+.btn:hover{
+    background-color: #fff;
+    color: #2f4e91;
+}
+
+.main-color{
+    color: #2f4e91
+}
+
+.jumbotron{
+    padding: 50px
+}
+
+.item-textbox{
+    width: -webkit-fill-available
+}

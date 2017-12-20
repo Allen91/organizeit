@@ -1,10 +1,13 @@
 (defproject organizeit "0.1.0-SNAPSHOT"
-  :description "Organize It"
+  :description "OrganizeIt"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.908"]
                  [org.clojure/core.async  "0.3.443"]
                  [reagent "0.6.1"]
-                 [re-frame "0.10.1"]]
+                 [re-frame "0.10.1"]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
+                 [cljsjs/react-bootstrap "0.31.0-0" :exclusions [cljsjs/react]]]
+
   :plugins [[lein-figwheel "0.5.13"]
             [lein-cljsbuild "1.1.1"]]
   :resource-paths ["resources" "src/cljs"]
@@ -26,7 +29,7 @@
                          :pretty-print true}}]}
   :figwheel {:http-server-root "public" ;; default and assumes "resources"
              :server-port 3448 ;; default
-             :server-ip "127.0.0.1"
+             :server-ip "0.0.0.0"
 
              ;;:css-dirs ["resources/public/css"] ;; watch and update CSS
              ;; Start an nREPL server into the running figwheel process
