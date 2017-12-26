@@ -16,14 +16,27 @@
      [bs/button {:on-click #(rf/dispatch [:load-page home-page])} "OrganizeIt!"]]]])
 
 (defn item-row
-  []
+  [item check]
   [:tr
    [:td
     [:input.form-control {:type :text
              :class "item-textbox"
-             :value "Milk"}]]
-   [:td
-    [:input {:type :checkbox}]]])
+             :value item}]]
+   [:td {:class "col-2"}
+    [:input {:type :checkbox :checked (true? check)}]]])
+
+(defn store-panel
+  [store]
+  (let [items  @(rf/subscribe [:store store])]
+    [bs/panel {:header store :class :text-center}
+     [bs/table {:class :text-left}
+      [:thead
+       [:tr
+        [:th "Item"]
+        [:th {:class "col-2"} "Bought?"]]]
+      [:tbody
+       (for [item items]
+         [item-row (key item) (val item)])]]]))
 
 (defn mailbox-panel
   []
@@ -54,14 +67,23 @@
 
 (defn main-panel
   []
-  [bs/panel {:header "Groceries"  :class :text-center}
-   [bs/table {:class :text-left}
-    [:thead
-     [:tr
-      [:th "Item"]
-      [:th "Bought?"]]]
-    [:tbody
-     [item-row]]]])
+  (let [groceries  @(rf/subscribe [:groceries])
+        store-text @(rf/subscribe [:store-text])]
+    [bs/panel {:header "Groceries"  :class :text-center}
+     [bs/table {:class :text-left}
+      [:tbody
+       (for [store groceries]
+         [store-panel (key store)])
+       [bs/panel {:header "Add Store" :class :text-center}
+        [bs/table {:class :text-left}
+         [:tr
+          [:td
+           [:input.form-control {:type :text
+                                 :class "store-textbox"
+                                 :on-change #(rf/dispatch [:update-store-text (-> % .-target .-value)])}]]
+          [:td {:class "store-button-col"}
+           [bs/button {:class "store-button"
+                       :on-click #(rf/dispatch [:add-store store-text])} "Add Store"]]]]]]]]))
 
 (defn home-page
   []

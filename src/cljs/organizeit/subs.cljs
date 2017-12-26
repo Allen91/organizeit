@@ -9,6 +9,22 @@
     (:route-page db)))
 
 (rf/reg-sub
+  :groceries
+  (fn [db _]
+    (:groceries db)))
+
+(rf/reg-sub
+  :store-text
+  (fn [db _]
+    (:store-text db)))
+
+(rf/reg-sub
+  :store
+  (fn [db [_ name]]
+    (let [groceries (:groceries db)]
+      (get groceries name))))
+
+(rf/reg-sub
   :mailbox-time
   (fn [db _]
     (:mailbox-time db)))

@@ -21,13 +21,25 @@
      :mailbox-time "N/A"
      :rent-last-paid "N/A"
      :electricity-last-paid "N/A"
-     :internet-last-paid "N/A"}))
-
+     :internet-last-paid "N/A"
+     :store-text ""
+     :groceries {"heb" {"milk" false "sugar" true} "indian store" {"paneer" false}}}))
 
 (rf/reg-event-db
   :load-page
   (fn [db [_ new-route]]
     (assoc db :route-page new-route)))
+
+(rf/reg-event-db
+  :update-store-text
+  (fn [db [_ text]]
+    (update db :store-text text)))
+
+(rf/reg-event-db
+  :add-store
+  (fn [db [_ new-store]]
+    (let [groceries (:groceries db)]
+      (assoc groceries new-store {}))))
 
 (rf/reg-event-db
   :update-mailbox

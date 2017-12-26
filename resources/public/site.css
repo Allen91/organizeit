@@ -53,6 +53,22 @@
     padding: 50px
 }
 
+.col-2{
+    width: 10%
+}
+
+.store-button-col{
+    width: 20%
+}
+
+.store-button{
+    margin: 0px 10px
+}
+
 .item-textbox{
+    width: -webkit-fill-available
+}
+
+.store-textbox{
     width: -webkit-fill-available
 }
