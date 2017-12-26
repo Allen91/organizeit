@@ -21,8 +21,8 @@
      :mailbox-time "N/A"
      :rent-last-paid "N/A"
      :electricity-last-paid "N/A"
-     :internet-last-paid "N/A"}))
-
+     :internet-last-paid "N/A"
+     :groceries {"heb" {"milk" false "sugar" true} "indian store" {"paneer" false}}}))
 
 (rf/reg-event-db
   :load-page

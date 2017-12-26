@@ -16,14 +16,27 @@
      [bs/button {:on-click #(rf/dispatch [:load-page home-page])} "OrganizeIt!"]]]])
 
 (defn item-row
-  []
+  [item check]
   [:tr
    [:td
     [:input.form-control {:type :text
              :class "item-textbox"
-             :value "Milk"}]]
+             :value item}]]
    [:td
-    [:input {:type :checkbox}]]])
+    [:input {:type :checkbox :checked (true? check)}]]])
+
+(defn store-panel
+  [store]
+  (let [items  @(rf/subscribe [:store store])]
+    [bs/panel {:header store :class :text-center}
+     [bs/table {:class :text-left}
+      [:thead
+       [:tr
+        [:th "Item"]
+        [:th "Bought?"]]]
+      [:tbody
+       (for [item items]
+         [item-row (key item) (val item)])]]]))
 
 (defn mailbox-panel
   []
@@ -54,14 +67,12 @@
 
 (defn main-panel
   []
-  [bs/panel {:header "Groceries"  :class :text-center}
-   [bs/table {:class :text-left}
-    [:thead
-     [:tr
-      [:th "Item"]
-      [:th "Bought?"]]]
-    [:tbody
-     [item-row]]]])
+  (let [groceries  @(rf/subscribe [:groceries])]
+    [bs/panel {:header "Groceries"  :class :text-center}
+     [bs/table {:class :text-left}
+      [:tbody
+       (for [store groceries]
+         [store-panel (key store)])]]]))
 
 (defn home-page
   []
