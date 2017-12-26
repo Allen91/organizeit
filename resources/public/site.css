@@ -35,14 +35,55 @@
     color: #2f4e91;
 }
 
-.btn, .btn:focus{
+.btn-primary, .btn-primary:focus{
     background-color: #2f4e91;
     color: #fff;
+    border-color: #120c60
 }
 
-.btn:hover{
+.btn-primary:disabled, .btn-primary:disabled:hover{
+    background-color: #2f4e91;
+    color: #fff;
+    border-color: #120c60
+}
+
+.btn-primary:hover{
     background-color: #fff;
     color: #2f4e91;
+}
+
+.btn-danger, .btn-danger:focus{
+    background-color: #d9534f;
+    color: #fff;
+    border-color: #d43f3a
+}
+
+.btn-danger:disabled, .btn-danger:disabled:hover{
+    background-color: #d9534f;
+    color: #fff;
+    border-color: #d43f3a
+}
+
+.btn-danger:hover{
+    background-color: #fff;
+    color: #d9534f;
+}
+
+.btn-warning, .btn-warning:focus{
+    background-color: #f0ad4e;
+    color: #fff;
+    border-color: #eea236
+}
+
+.btn-warning:disabled, .btn-warning:disabled:hover{
+    background-color: #f0ad4e;
+    color: #fff;
+    border-color: #eea236
+}
+
+.btn-warning:hover{
+    background-color: #fff;
+    color: #f0ad4e;
 }
 
 .main-color{
@@ -53,6 +94,28 @@
     padding: 50px
 }
 
-.item-textbox{
+.col-2{
+    width: 10%;
+}
+
+.checkbox{
+    width: 10%;
+    padding: 3px 18px;
+    margin: 0px
+}
+
+.store-button-col{
+    width: 20%
+}
+
+.store-button{
+    margin: 0px 10px
+}
+
+.store-textbox, .item-textbox{
     width: -webkit-fill-available
+}
+
+.table{
+    margin-bottom: 0px
 }

@@ -4,7 +4,9 @@
     <wildcardResourcePatterns>
       <entry name="!cljs:*" />
       <entry name="!dev-resources:*" />
+      <entry name="!env:*" />
       <entry name="!resources:*" />
+      <entry name="!dev:*" />
       <entry name="!?*.java" />
       <entry name="!?*.form" />
       <entry name="!?*.class" />
