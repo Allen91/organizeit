@@ -85,6 +85,7 @@
            [bs/button {:class "store-button"
                        :on-click #(rf/dispatch [:add-store store-text])} "Add Store"]]]]]]]]))
 
+
 (defn home-page
   []
   [:div {:class "home"}
