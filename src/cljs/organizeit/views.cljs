@@ -70,20 +70,19 @@
   (let [groceries  @(rf/subscribe [:groceries])
         store-text @(rf/subscribe [:store-text])]
     [bs/panel {:header "Groceries"  :class :text-center}
-     [bs/table {:class :text-left}
-      [:tbody
-       (for [store groceries]
-         [store-panel (key store)])
-       [bs/panel {:header "Add Store" :class :text-center}
-        [bs/table {:class :text-left}
-         [:tr
-          [:td
-           [:input.form-control {:type :text
-                                 :class "store-textbox"
-                                 :on-change #(rf/dispatch [:update-store-text (-> % .-target .-value)])}]]
-          [:td {:class "store-button-col"}
-           [bs/button {:class "store-button"
-                       :on-click #(rf/dispatch [:add-store store-text])} "Add Store"]]]]]]]]))
+     (for [store groceries]
+       [store-panel (key store)])
+     [bs/panel {:header "Add Store" :class :text-center}
+      [bs/table {:class :text-left}
+       [:tbody
+        [:tr
+         [:td
+          [:input.form-control {:type :text
+                                :class "store-textbox"
+                                :on-change #(rf/dispatch [:update-store-text (-> % .-target .-value)])}]]
+         [:td {:class "store-button-col"}
+          [bs/button {:class "store-button"
+                      :on-click #(rf/dispatch [:add-store store-text])} "Add Store"]]]]]]]))
 
 
 (defn home-page
