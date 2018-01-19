@@ -27,6 +27,8 @@
     <orderEntry type="library" name="Leiningen: cljsjs/react:15.4.0-0" level="project" />
     <orderEntry type="library" name="Leiningen: clojure-complete:0.2.4" level="project" />
     <orderEntry type="library" name="Leiningen: com.andrewmcveigh/cljs-time:0.5.2" level="project" />
+    <orderEntry type="library" name="Leiningen: com.cognitect/transit-cljs:0.8.243" level="project" />
+    <orderEntry type="library" name="Leiningen: com.cognitect/transit-js:0.8.846" level="project" />
     <orderEntry type="library" name="Leiningen: com.google.code.findbugs/jsr305:3.0.1" level="project" />
     <orderEntry type="library" name="Leiningen: com.google.code.gson/gson:2.7" level="project" />
     <orderEntry type="library" name="Leiningen: com.google.errorprone/error_prone_annotations:2.0.18" level="project" />
@@ -52,7 +54,10 @@
     <orderEntry type="library" name="Leiningen: org.clojure/tools.reader:1.0.5" level="project" />
     <orderEntry type="library" name="Leiningen: org.mozilla/rhino:1.7R5" level="project" />
     <orderEntry type="library" name="Leiningen: org.ow2.asm/asm-all:4.2" level="project" />
+    <orderEntry type="library" name="Leiningen: re-com:2.1.0" level="project" />
     <orderEntry type="library" name="Leiningen: re-frame:0.10.1" level="project" />
+    <orderEntry type="library" name="Leiningen: re-frisk-shell:0.5.2" level="project" />
+    <orderEntry type="library" name="Leiningen: re-frisk:0.5.3" level="project" />
     <orderEntry type="library" name="Leiningen: reagent:0.6.1" level="project" />
   </component>
 </module>

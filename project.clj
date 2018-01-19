@@ -6,6 +6,7 @@
                  [reagent "0.6.1"]
                  [re-frame "0.10.1"]
                  [com.andrewmcveigh/cljs-time "0.5.2"]
+                 [re-frisk "0.5.3"]
                  [cljsjs/react-bootstrap "0.31.0-0" :exclusions [cljsjs/react]]]
 
   :plugins [[lein-figwheel "0.5.13"]
@@ -26,7 +27,8 @@
                          :output-to "resources/public/js/compiled/core.js"
                          :output-dir "resources/public/js/compiled/out"
                          :optimizations :none
-                         :pretty-print true}}]}
+                         :pretty-print true
+                         :preloads [re-frisk.preload]}}]}
   :figwheel {:http-server-root "public" ;; default and assumes "resources"
              :server-port 3448 ;; default
              :server-ip "0.0.0.0"

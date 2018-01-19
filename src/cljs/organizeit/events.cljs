@@ -23,7 +23,12 @@
      :electricity-last-paid "N/A"
      :internet-last-paid "N/A"
      :store-text ""
-     :groceries {"heb" {"milk" false "sugar" true} "indian store" {"paneer" false}}}))
+     :groceries {"HEB" {"milk" false "sugar" true} "Indian Store" {"paneer" false}}}))
+
+(rf/reg-event-db
+  :update-checkbox
+  (fn [db [_ new-value store item-name]]
+    (assoc-in db [:groceries store item-name] new-value)))
 
 (rf/reg-event-db
   :load-page

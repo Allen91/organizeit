@@ -1,5 +1,6 @@
 (ns organizeit.views
-  (:require [reagent.core :as r]
+  (:require [goog.string :as g-string]
+            [reagent.core :as r]
             [re-frame.core :as rf]
             [clojure.string :as str]
             [organizeit.components.bootstrap :as bs]))
@@ -15,15 +16,22 @@
     [bs/navbar-brand
      [bs/button {:on-click #(rf/dispatch [:load-page home-page])} "OrganizeIt!"]]]])
 
+(defn item-checkbox
+  [store item-name bought]
+  [:td [bs/checkbox {:checked (true? bought)
+                     :on-change #(rf/dispatch [:update-checkbox
+                                               (.-target.checked %)
+                                               store
+                                               item-name])}]])
+
 (defn item-row
-  [item check]
+  [store item-name bought]
   [:tr
    [:td
     [:input.form-control {:type :text
-             :class "item-textbox"
-             :value item}]]
-   [:td {:class "col-2"}
-    [:input {:type :checkbox :checked (true? check)}]]])
+                          :class "item-textbox"
+                          :value item-name}]]
+   [item-checkbox store item-name bought]])
 
 (defn store-panel
   [store]
@@ -36,7 +44,8 @@
         [:th {:class "col-2"} "Bought?"]]]
       [:tbody
        (for [item items]
-         [item-row (key item) (val item)])]]]))
+         ^{:key (g-string/format "store-%s-item-%s" store item)}
+         [item-row store (key item) (val item)])]]]))
 
 (defn mailbox-panel
   []
@@ -71,6 +80,7 @@
         store-text @(rf/subscribe [:store-text])]
     [bs/panel {:header "Groceries"  :class :text-center}
      (for [store groceries]
+       ^{:key (g-string/format "store-%s" store)}
        [store-panel (key store)])
      [bs/panel {:header "Add Store" :class :text-center}
       [bs/table {:class :text-left}

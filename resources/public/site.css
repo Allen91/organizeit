@@ -54,8 +54,15 @@
 }
 
 .col-2{
-    width: 10%
+    width: 10%;
 }
+
+.checkbox{
+    width: 10%;
+    padding: 3px 18px;
+    margin: 0px
+}
+
 
 .store-button-col{
     width: 20%
