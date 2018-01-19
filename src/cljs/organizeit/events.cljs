@@ -38,13 +38,14 @@
 (rf/reg-event-db
   :update-store-text
   (fn [db [_ text]]
-    (update db :store-text text)))
+    (assoc db :store-text text)))
 
 (rf/reg-event-db
   :add-store
   (fn [db [_ new-store]]
-    (let [groceries (:groceries db)]
-      (assoc groceries new-store {}))))
+    (-> db
+        (assoc :groceries (conj (:groceries db) {new-store {}}))
+        (assoc :store-text ""))))
 
 (rf/reg-event-db
   :update-mailbox

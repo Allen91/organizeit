@@ -89,9 +89,11 @@
          [:td
           [:input.form-control {:type :text
                                 :class "store-textbox"
-                                :on-change #(rf/dispatch [:update-store-text (-> % .-target .-value)])}]]
+                                :value store-text
+                                :on-change #(rf/dispatch [:update-store-text (.-target.value %)])}]]
          [:td {:class "store-button-col"}
           [bs/button {:class "store-button"
+                      :disabled (= store-text "")
                       :on-click #(rf/dispatch [:add-store store-text])} "Add Store"]]]]]]]))
 
 

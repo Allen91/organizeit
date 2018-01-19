@@ -38,6 +38,14 @@
 .btn, .btn:focus{
     background-color: #2f4e91;
     color: #fff;
+    border-color: #120c60
+}
+
+
+.btn:disabled, .btn:disabled:hover{
+    background-color: #2f4e91;
+    color: #fff;
+    border-color: #120c60
 }
 
 .btn:hover{
@@ -62,7 +70,6 @@
     padding: 3px 18px;
     margin: 0px
 }
-
 
 .store-button-col{
     width: 20%
