@@ -48,6 +48,11 @@
         (assoc :store-text ""))))
 
 (rf/reg-event-db
+  :add-item
+  (fn [db [_ store new-item]]
+    (assoc-in db [:groceries store] (conj (get-in db [:groceries store]) {new-item false}))))
+
+(rf/reg-event-db
   :update-mailbox
   (fn [db [_ _]]
     (assoc db :mailbox-time (unparse mailbox-formatter (local-now)))))

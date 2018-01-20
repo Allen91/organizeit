@@ -24,13 +24,18 @@
                                                store
                                                item-name])}]])
 
+(defn item-text
+  [item-name]
+  [:td
+   [:input.form-control {:type :text
+                         :class "item-textbox"
+                         :value item-name
+                         :disabled true}]])
+
 (defn item-row
   [store item-name bought]
   [:tr
-   [:td
-    [:input.form-control {:type :text
-                          :class "item-textbox"
-                          :value item-name}]]
+   [item-text item-name]
    [item-checkbox store item-name bought]])
 
 (defn store-panel
@@ -45,7 +50,32 @@
       [:tbody
        (for [item items]
          ^{:key (g-string/format "store-%s-item-%s" store item)}
-         [item-row store (key item) (val item)])]]]))
+         [item-row store (key item) (val item)])
+       [:tr
+        [:td
+         [:input.form-control {:type :text
+                               :class "item-textbox"
+                               :on-blur #(rf/dispatch [:add-item store (.-target.value %)])}]]
+        [:td {:class "item-checkbox-col"}
+         [bs/checkbox {:disabled true
+                       :checked false}]]]]]]))
+
+(defn add-store-panel
+  []
+  (let [store-text @(rf/subscribe [:store-text])]
+  [bs/panel {:header "Add Store" :class :text-center}
+   [bs/table {:class :text-left}
+    [:tbody
+     [:tr
+      [:td
+       [:input.form-control {:type :text
+                             :class "store-textbox"
+                             :value store-text
+                             :on-change #(rf/dispatch [:update-store-text (.-target.value %)])}]]
+      [:td {:class "store-button-col"}
+       [bs/button {:class "store-button"
+                   :disabled (= store-text "")
+                   :on-click #(rf/dispatch [:add-store store-text])} "Add Store"]]]]]]))
 
 (defn mailbox-panel
   []
@@ -76,25 +106,12 @@
 
 (defn main-panel
   []
-  (let [groceries  @(rf/subscribe [:groceries])
-        store-text @(rf/subscribe [:store-text])]
+  (let [groceries  @(rf/subscribe [:groceries])]
     [bs/panel {:header "Groceries"  :class :text-center}
      (for [store groceries]
        ^{:key (g-string/format "store-%s" store)}
        [store-panel (key store)])
-     [bs/panel {:header "Add Store" :class :text-center}
-      [bs/table {:class :text-left}
-       [:tbody
-        [:tr
-         [:td
-          [:input.form-control {:type :text
-                                :class "store-textbox"
-                                :value store-text
-                                :on-change #(rf/dispatch [:update-store-text (.-target.value %)])}]]
-         [:td {:class "store-button-col"}
-          [bs/button {:class "store-button"
-                      :disabled (= store-text "")
-                      :on-click #(rf/dispatch [:add-store store-text])} "Add Store"]]]]]]]))
+     [add-store-panel]]))
 
 
 (defn home-page

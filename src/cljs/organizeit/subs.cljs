@@ -21,8 +21,7 @@
 (rf/reg-sub
   :store
   (fn [db [_ name]]
-    (let [groceries (:groceries db)]
-      (get groceries name))))
+    (get-in db [:groceries name])))
 
 (rf/reg-sub
   :mailbox-time
