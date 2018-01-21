@@ -23,12 +23,12 @@
      :electricity-last-paid "N/A"
      :internet-last-paid "N/A"
      :store-text ""
-     :groceries {"HEB" {"milk" false "sugar" true} "Indian Store" {"paneer" false}}}))
+     :groceries {"HEB" {1 {:name "milk" :value false} 2 {:name "sugar" :value true}} "Indian Store" {1 {:name "paneer" :value false}}}}))
 
 (rf/reg-event-db
-  :update-checkbox
-  (fn [db [_ new-value store item-name]]
-    (assoc-in db [:groceries store item-name] new-value)))
+  :update-item
+  (fn [db [_ new-value store pos key]]
+    (assoc-in db [:groceries store pos key] new-value)))
 
 (rf/reg-event-db
   :load-page
@@ -50,7 +50,8 @@
 (rf/reg-event-db
   :add-item
   (fn [db [_ store new-item]]
-    (assoc-in db [:groceries store] (conj (get-in db [:groceries store]) {new-item false}))))
+    (let [pos (count (get-in db [:groceries store]))]
+    (assoc-in db [:groceries store] (conj (get-in db [:groceries store]) {(+ pos 1) {:name new-item :value false}})))))
 
 (rf/reg-event-db
   :update-mailbox

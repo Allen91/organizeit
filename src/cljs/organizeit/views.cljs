@@ -17,30 +17,37 @@
      [bs/button {:on-click #(rf/dispatch [:load-page home-page])} "OrganizeIt!"]]]])
 
 (defn item-checkbox
-  [store item-name bought]
-  [:td [bs/checkbox {:checked (true? bought)
-                     :on-change #(rf/dispatch [:update-checkbox
-                                               (.-target.checked %)
-                                               store
-                                               item-name])}]])
+  [store pos]
+  (let [bought @(rf/subscribe [:item-checkbox store pos])]
+    [:td [bs/checkbox {:checked (true? bought)
+                       :on-change #(rf/dispatch [:update-item
+                                                 (.-target.checked %)
+                                                 store
+                                                 pos
+                                                 :value])}]]))
 
 (defn item-text
-  [item-name]
-  [:td
-   [:input.form-control {:type :text
-                         :class "item-textbox"
-                         :value item-name
-                         :disabled true}]])
+  [store pos]
+  (let [name @(rf/subscribe [:item-name store pos])]
+    [:td
+     [:input.form-control {:type :text
+                           :class "item-textbox"
+                           :value name
+                           :on-change #(rf/dispatch [:update-item
+                                                     (.-target.value %)
+                                                     store
+                                                     pos
+                                                     :name])}]]))
 
 (defn item-row
-  [store item-name bought]
+  [store pos]
   [:tr
-   [item-text item-name]
-   [item-checkbox store item-name bought]])
+   [item-text store pos]
+   [item-checkbox store pos]])
 
 (defn store-panel
   [store]
-  (let [items  @(rf/subscribe [:store store])]
+  (let [items @(rf/subscribe [:store store])]
     [bs/panel {:header store :class :text-center}
      [bs/table {:class :text-left}
       [:thead
@@ -49,13 +56,13 @@
         [:th {:class "col-2"} "Bought?"]]]
       [:tbody
        (for [item items]
-         ^{:key (g-string/format "store-%s-item-%s" store item)}
-         [item-row store (key item) (val item)])
+         ^{:key (g-string/format "store-%s-item-%d" store (key item))}
+         [item-row store (key item)])
        [:tr
         [:td
          [:input.form-control {:type :text
                                :class "item-textbox"
-                               :on-blur #(rf/dispatch [:add-item store (.-target.value %)])}]]
+                               :on-change #(rf/dispatch [:add-item store (.-target.value %)])}]]
         [:td {:class "item-checkbox-col"}
          [bs/checkbox {:disabled true
                        :checked false}]]]]]]))
