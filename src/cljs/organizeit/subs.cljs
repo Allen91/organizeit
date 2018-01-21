@@ -9,19 +9,29 @@
     (:route-page db)))
 
 (rf/reg-sub
-  :groceries
+  :store-keys
   (fn [db _]
-    (:groceries db)))
+    (keys (:groceries db))))
 
 (rf/reg-sub
-  :store-text
+  :add-store-text
   (fn [db _]
-    (:store-text db)))
+    (:add-store-text db)))
 
 (rf/reg-sub
-  :store
+  :count-items
   (fn [db [_ name]]
-    (get-in db [:groceries name])))
+    (range (inc (count (get-in db [:groceries name]))))))
+
+(rf/reg-sub
+  :item-name
+  (fn [db [_ store pos]]
+    (get-in db [:groceries store pos :name] "")))
+
+(rf/reg-sub
+  :item-checkbox
+  (fn [db [_ store pos]]
+    (get-in db [:groceries store pos :value] false)))
 
 (rf/reg-sub
   :mailbox-time

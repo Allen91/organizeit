@@ -41,7 +41,6 @@
     border-color: #120c60
 }
 
-
 .btn:disabled, .btn:disabled:hover{
     background-color: #2f4e91;
     color: #fff;
@@ -79,10 +78,6 @@
     margin: 0px 10px
 }
 
-.item-textbox{
-    width: -webkit-fill-available
-}
-
-.store-textbox{
+.store-textbox, .item-textbox{
     width: -webkit-fill-available
 }

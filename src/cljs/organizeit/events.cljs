@@ -22,13 +22,18 @@
      :rent-last-paid "N/A"
      :electricity-last-paid "N/A"
      :internet-last-paid "N/A"
-     :store-text ""
-     :groceries {"HEB" {"milk" false "sugar" true} "Indian Store" {"paneer" false}}}))
+     :add-store-text ""
+     :groceries {"HEB" {0 {:name "milk" :value false} 1 {:name "sugar" :value true}} "Indian Store" {0 {:name "paneer" :value false}}}}))
 
 (rf/reg-event-db
-  :update-checkbox
-  (fn [db [_ new-value store item-name]]
-    (assoc-in db [:groceries store item-name] new-value)))
+  :update-item-name
+  (fn [db [_ new-value store pos key]]
+    (assoc-in db [:groceries store pos :name] new-value)))
+
+(rf/reg-event-db
+  :update-item-value
+  (fn [db [_ new-value store pos key]]
+    (assoc-in db [:groceries store pos :value] new-value)))
 
 (rf/reg-event-db
   :load-page
@@ -38,19 +43,14 @@
 (rf/reg-event-db
   :update-store-text
   (fn [db [_ text]]
-    (assoc db :store-text text)))
+    (assoc db :add-store-text text)))
 
 (rf/reg-event-db
   :add-store
   (fn [db [_ new-store]]
     (-> db
         (assoc :groceries (conj (:groceries db) {new-store {}}))
-        (assoc :store-text ""))))
-
-(rf/reg-event-db
-  :add-item
-  (fn [db [_ store new-item]]
-    (assoc-in db [:groceries store] (conj (get-in db [:groceries store]) {new-item false}))))
+        (assoc :add-store-text ""))))
 
 (rf/reg-event-db
   :update-mailbox
