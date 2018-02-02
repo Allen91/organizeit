@@ -48,7 +48,10 @@
       [:tbody
        (for [pos items-count]
          ^{:key (g-string/format "store-%s-item-%d" store pos)}
-         [item-row store pos])]]]))
+         [item-row store pos])
+       [:tr
+        [:td [bs/button {:class :btn-danger :on-click #(rf/dispatch [:clear-store store])} "Clear Store"]]
+        [:td [bs/button {:class :btn-warning} "Clear Checked"]]]]]]))
 
 (defn add-store-panel
   []
@@ -63,35 +66,35 @@
                              :value add-store-text
                              :on-change #(rf/dispatch [:update-store-text (.-target.value %)])}]]
       [:td {:class "store-button-col"}
-       [bs/button {:class "store-button"
+       [bs/button {:class :btn-primary
                    :disabled (= add-store-text "")
                    :on-click #(rf/dispatch [:add-store add-store-text])} "Add Store"]]]]]]))
 
 (defn mailbox-panel
   []
   [bs/panel {:header "Mailbox" :class :text-center}
-   [bs/button {:on-click #(rf/dispatch [:update-mailbox])} "Checked Mailbox"]
+   [bs/button {:class :btn-primary :on-click #(rf/dispatch [:update-mailbox])} "Checked Mailbox"]
    [:p {:class "margin-top-20"}"Last checked on " [:strong bold @(rf/subscribe [:mailbox-time])]]])
 
 (defn rent-panel
   []
   [bs/panel {:header "Rent" :class :text-center}
-   [bs/button {:on-click #(rf/dispatch [:paid-current-rent])} "Paid current month"]
-   [bs/button {:class "margin-left-20" :on-click #(rf/dispatch [:paid-next-rent])} "Paid next month"]
+   [bs/button {:class :btn-primary :on-click #(rf/dispatch [:paid-current-rent])} "Paid current month"]
+   [bs/button {:class "btn-primary margin-left-20" :on-click #(rf/dispatch [:paid-next-rent])} "Paid next month"]
    [:p {:class "margin-top-20"}"Paid for " [:strong bold @(rf/subscribe [:rent-last-paid])]]])
 
 (defn electricity-panel
   []
   [bs/panel {:header "Electricity Bill" :class :text-center}
-   [bs/button {:on-click #(rf/dispatch [:paid-current-electricity])} "Paid current month"]
-   [bs/button {:class "margin-left-20" :on-click #(rf/dispatch [:paid-next-electricity])} "Paid next month"]
+   [bs/button {:class :btn-primary :on-click #(rf/dispatch [:paid-current-electricity])} "Paid current month"]
+   [bs/button {:class "btn-primary margin-left-20" :on-click #(rf/dispatch [:paid-next-electricity])} "Paid next month"]
    [:p {:class "margin-top-20"}"Paid for " [:strong bold @(rf/subscribe [:electricity-last-paid])]]])
 
 (defn internet-panel
   []
   [bs/panel {:header "Internet Bill" :class :text-center}
-   [bs/button {:on-click #(rf/dispatch [:paid-current-internet])} "Paid current month"]
-   [bs/button {:class "margin-left-20" :on-click #(rf/dispatch [:paid-next-internet])} "Paid next month"]
+   [bs/button {:class :btn-primary :on-click #(rf/dispatch [:paid-current-internet])} "Paid current month"]
+   [bs/button {:class "btn-primary margin-left-20" :on-click #(rf/dispatch [:paid-next-internet])} "Paid next month"]
    [:p {:class "margin-top-20"}"Paid for " [:strong bold @(rf/subscribe [:internet-last-paid])]]])
 
 (defn main-panel
@@ -111,7 +114,7 @@
    [bs/jumbotron
     [:h1 "Welcome to "[:span {:class "main-color" }"OrganizeIt!"]]
     [:p {:class "margin-top-20 margin-bottom-30"} "An app for roommates to organize their daily chores."]
-    [bs/button {:on-click #(rf/dispatch [:load-page main-page])} "Start Organizing here!!"]]])
+    [bs/button {:class :btn-primary :on-click #(rf/dispatch [:load-page main-page])} "Start Organizing here!!"]]])
 
 (defn main-page
   []

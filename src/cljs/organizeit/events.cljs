@@ -45,6 +45,11 @@
     (assoc db :add-store-text text)))
 
 (rf/reg-event-db
+  :clear-store
+  (fn [db [_ store]]
+    (update-in db [:groceries] dissoc store)))
+
+(rf/reg-event-db
   :add-store
   (fn [db [_ new-store]]
     (-> db
