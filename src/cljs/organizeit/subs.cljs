@@ -34,6 +34,16 @@
     (get-in db [:groceries store pos :value] false)))
 
 (rf/reg-sub
+  :item-name
+  (fn [db [_ store pos]]
+    (get-in db [:groceries store pos :name])))
+
+(rf/reg-sub
+  :item-checkbox
+  (fn [db [_ store pos]]
+    (get-in db [:groceries store pos :value])))
+
+(rf/reg-sub
   :mailbox-time
   (fn [db _]
     (:mailbox-time db)))
