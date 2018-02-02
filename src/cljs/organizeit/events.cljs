@@ -33,6 +33,7 @@
 (rf/reg-event-db
   :update-item-value
   (fn [db [_ new-value store pos key]]
+    (assoc-in db [:groceries store pos :value] new-value)))
 
 (rf/reg-event-db
   :load-page
