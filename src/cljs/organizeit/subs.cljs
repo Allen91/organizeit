@@ -14,14 +14,24 @@
     (keys (:groceries db))))
 
 (rf/reg-sub
+  :store
+  (fn [db [_ name]]
+    (get-in db [:groceries name])))
+
+(rf/reg-sub
   :add-store-text
   (fn [db _]
     (:add-store-text db)))
 
 (rf/reg-sub
-  :count-items
+  :items-count-range
   (fn [db [_ name]]
     (range (inc (count (get-in db [:groceries name]))))))
+
+(rf/reg-sub
+  :count-items
+  (fn [db [_ name]]
+    (count (get-in db [:groceries name]))))
 
 (rf/reg-sub
   :item-name

@@ -38,7 +38,8 @@
 
 (defn store-panel
   [store]
-  (let [items-count @(rf/subscribe [:count-items store])]
+  (let [items-count-range @(rf/subscribe [:items-count-range store])
+        items-count @(rf/subscribe [:count-items store])]
     [bs/panel {:header store :class :text-center}
      [bs/table {:class :text-left}
       [:thead
@@ -46,12 +47,15 @@
         [:th "Item"]
         [:th {:class "col-2"} "Bought?"]]]
       [:tbody
-       (for [pos items-count]
+       (for [pos items-count-range]
          ^{:key (g-string/format "store-%s-item-%d" store pos)}
          [item-row store pos])
        [:tr
-        [:td [bs/button {:class :btn-danger :on-click #(rf/dispatch [:clear-store store])} "Clear Store"]]
-        [:td [bs/button {:class :btn-warning} "Clear Checked"]]]]]]))
+        [:td [bs/button {:class :btn-danger
+                         :on-click #(rf/dispatch [:clear-store store])} "Clear Store"]]
+        [:td [bs/button {:class :btn-warning
+                         :on-click #(rf/dispatch [:clear-checked store])
+                         :disabled (= items-count 0)} "Clear Checked"]]]]]]))
 
 (defn add-store-panel
   []

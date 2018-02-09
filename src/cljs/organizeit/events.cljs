@@ -23,7 +23,7 @@
      :electricity-last-paid "N/A"
      :internet-last-paid "N/A"
      :add-store-text ""
-     :groceries {"HEB" {0 {:name "milk" :value false} 1 {:name "sugar" :value true}} "Indian Store" {0 {:name "paneer" :value false}}}}))
+     :groceries {"HEB" {0 {:name "milk" :value false} 1 {:name "sugar" :value true}} "Indian Store" {0 {:name "paneer" :value false}} "Walmart" {}}}))
 
 (rf/reg-event-db
   :update-item-name
@@ -48,7 +48,21 @@
 (rf/reg-event-db
   :clear-store
   (fn [db [_ store]]
-    (update-in db [:groceries] dissoc store)))
+    (update db :groceries dissoc store)))
+
+(defn update-item-keys
+  [old-map]
+  (zipmap (range (count old-map)) (vals old-map)))
+
+(rf/reg-event-db
+  :clear-checked
+  (fn [db [_ name]]
+    (let [store-items (get-in db [:groceries name])]
+      (->> store-items
+           (remove #(true? (:value (second %))))
+           (into {})
+           (update-item-keys)
+           (assoc-in db [:groceries name])))))
 
 (rf/reg-event-db
   :add-store
