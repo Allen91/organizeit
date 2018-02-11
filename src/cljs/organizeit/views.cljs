@@ -20,11 +20,10 @@
   [store pos]
   (let [bought @(rf/subscribe [:item-checkbox store pos])]
     [:td [bs/checkbox {:checked (true? bought)
-                       :on-change #(rf/dispatch [:update-item
+                       :on-change #(rf/dispatch [:update-item-value
                                                  (.-target.checked %)
                                                  store
-                                                 pos
-                                                 :value])}]]))
+                                                 pos])}]]))
 
 (defn item-text
   [store pos]
@@ -33,11 +32,10 @@
      [:input.form-control {:type :text
                            :class "item-textbox"
                            :value name
-                           :on-change #(rf/dispatch [:update-item
+                           :on-change #(rf/dispatch [:update-item-name
                                                      (.-target.value %)
                                                      store
-                                                     pos
-                                                     :name])}]]))
+                                                     pos])}]]))
 
 (defn item-row
   [store pos]

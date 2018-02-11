@@ -27,12 +27,12 @@
 
 (rf/reg-event-db
   :update-item-name
-  (fn [db [_ new-value store pos key]]
+  (fn [db [_ new-value store pos]]
     (assoc-in db [:groceries store pos :name] new-value)))
 
 (rf/reg-event-db
   :update-item-value
-  (fn [db [_ new-value store pos key]]
+  (fn [db [_ new-value store pos]]
     (assoc-in db [:groceries store pos :value] new-value)))
 
 (rf/reg-event-db
