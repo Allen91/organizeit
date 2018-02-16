@@ -1,7 +1,41 @@
 (ns organizeit.subs
   (:require [reagent.core :as r]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [goog.string :as g-string]))
 
+
+(defn month-map
+  [month-number]
+  ({"01" "January"
+    "02" "February"
+    "03" "March"
+    "04" "April"
+    "05" "May"
+    "06" "June"
+    "07" "July"
+    "08" "August"
+    "09" "September"
+    "10" "October"
+    "11" "November"
+    "12" "December"} month-number))
+
+(defn get-month
+  [date-obj]
+  (if date-obj
+    (month-map (subs (str date-obj) 4 6))
+    "N/A"))
+
+(defn get-mailbox-time
+  [date-obj]
+  (let [date-str (str date-obj)
+        month (month-map (subs date-str 4 6))
+        date (subs date-str 6 8)
+        hrs (subs date-str 9 11)
+        mins (subs date-str 11 13)
+        year (subs date-str 0 4)]
+    (if date-obj
+      (g-string/format "%s %s, %s at %s:%s" date month year hrs mins)
+      "N/A")))
 
 (rf/reg-sub
   :route-page
@@ -46,19 +80,19 @@
 (rf/reg-sub
   :mailbox-time
   (fn [db _]
-    (:mailbox-time db)))
+    (get-mailbox-time (:mailbox-time db))))
 
 (rf/reg-sub
   :rent-last-paid
   (fn [db _]
-    (:rent-last-paid db)))
+    (get-month (:rent-last-paid db))))
 
 (rf/reg-sub
   :electricity-last-paid
   (fn [db _]
-    (:electricity-last-paid db)))
+    (get-month (:electricity-last-paid db))))
 
 (rf/reg-sub
   :internet-last-paid
   (fn [db _]
-    (:internet-last-paid db)))
+    (get-month (:internet-last-paid db))))

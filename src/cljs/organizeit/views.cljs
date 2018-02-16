@@ -2,7 +2,6 @@
   (:require [goog.string :as g-string]
             [reagent.core :as r]
             [re-frame.core :as rf]
-            [clojure.string :as str]
             [organizeit.components.bootstrap :as bs]))
 
 (defn router
@@ -16,32 +15,25 @@
     [bs/navbar-brand
      [bs/button {:on-click #(rf/dispatch [:load-page home-page])} "OrganizeIt!"]]]])
 
-(defn item-checkbox
-  [store pos]
-  (let [bought @(rf/subscribe [:item-checkbox store pos])]
-    [:td [bs/checkbox {:checked (true? bought)
-                       :on-change #(rf/dispatch [:update-item-value
-                                                 (.-target.checked %)
-                                                 store
-                                                 pos])}]]))
-
-(defn item-text
-  [store pos]
-  (let [name @(rf/subscribe [:item-name store pos])]
-    [:td
-     [:input.form-control {:type :text
-                           :class "item-textbox"
-                           :value name
-                           :on-change #(rf/dispatch [:update-item-name
-                                                     (.-target.value %)
-                                                     store
-                                                     pos])}]]))
-
 (defn item-row
   [store pos]
-  [:tr
-   [item-text store pos]
-   [item-checkbox store pos]])
+  (let [name @(rf/subscribe [:item-name store pos])
+        bought @(rf/subscribe [:item-checkbox store pos])]
+    [:tr
+     [:td
+      [:input.form-control {:type :text
+                            :class "item-textbox"
+                            :value name
+                            :on-change #(rf/dispatch [:update-item-name
+                                                      (.-target.value %)
+                                                      store
+                                                      pos])}]]
+     [:td [bs/checkbox {:checked bought
+                        :disabled (= name "")
+                        :on-change #(rf/dispatch [:update-item-value
+                                                  (.-target.checked %)
+                                                  store
+                                                  pos])}]]]))
 
 (defn store-panel
   [store]
