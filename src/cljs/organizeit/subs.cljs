@@ -1,7 +1,8 @@
 (ns organizeit.subs
   (:require [reagent.core :as r]
             [re-frame.core :as rf]
-            [goog.string :as g-string]))
+            [goog.string :as g-string]
+            [cljs-time.core :refer [hour]]))
 
 
 (defn month-map

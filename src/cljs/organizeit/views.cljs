@@ -27,10 +27,12 @@
                             :on-change #(rf/dispatch [:update-item-name
                                                       (.-target.value %)
                                                       store
-                                                      pos])}]]
-     [:td [bs/checkbox {:checked bought
-                        :disabled (= name "")
-                        :on-change #(rf/dispatch [:update-item-value
+                                                      pos])
+                            :on-blur #(rf/dispatch [:trim-item store])}]]
+     [:td
+      [bs/checkbox {:checked bought
+                    :disabled (= name "")
+                    :on-change #(rf/dispatch [:update-item-value
                                                   (.-target.checked %)
                                                   store
                                                   pos])}]]]))
@@ -43,18 +45,23 @@
      [bs/table {:class :text-left}
       [:thead
        [:tr
-        [:th "Item"]
-        [:th {:class "col-2"} "Bought?"]]]
+        [:th {:class "col-md-11"} "Item"]
+        [:th "Bought?"]]]
       [:tbody
        (for [pos items-count-range]
          ^{:key (g-string/format "store-%s-item-%d" store pos)}
          [item-row store pos])
        [:tr
-        [:td [bs/button {:class :btn-danger
-                         :on-click #(rf/dispatch [:clear-store store])} "Clear Store"]]
-        [:td [bs/button {:class :btn-warning
-                         :on-click #(rf/dispatch [:clear-checked store])
-                         :disabled (= items-count 0)} "Clear Checked"]]]]]]))
+        [:td
+         [bs/button {:class :btn-danger
+                     :on-click #(rf/dispatch [:clear-store store])} "Clear Store"]
+         [bs/button {:class "btn-warning margin-left-20"
+                     :on-click #(rf/dispatch [:clear-checked store])
+                     :disabled (= items-count 0)} "Clear Checked"]]
+        [:td
+         [bs/button {:class :btn-success
+                     :on-click #(rf/dispatch [:check-all store])
+                     :disabled (= items-count 0)} "Check All"]]]]]]))
 
 (defn add-store-panel
   []

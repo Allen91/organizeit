@@ -48,11 +48,30 @@
   (zipmap (range (count old-map)) (vals old-map)))
 
 (rf/reg-event-db
+  :check-all
+  (fn [db [_ name]]
+    (let [store-items (get-in db [:groceries name])]
+      (->> store-items
+           (map #(assoc (second %) :value true))
+           (zipmap (range (count store-items)))
+           (assoc-in db [:groceries name])))))
+
+(rf/reg-event-db
   :clear-checked
   (fn [db [_ name]]
     (let [store-items (get-in db [:groceries name])]
       (->> store-items
            (remove #(true? (:value (second %))))
+           (into {})
+           (update-item-keys)
+           (assoc-in db [:groceries name])))))
+
+(rf/reg-event-db
+  :trim-item
+  (fn [db [_ name]]
+    (let [store-items (get-in db [:groceries name])]
+      (->> store-items
+           (remove #(= "" (:name (second %))))
            (into {})
            (update-item-keys)
            (assoc-in db [:groceries name])))))
@@ -73,7 +92,7 @@
 (rf/reg-event-db
   :update-mailbox
   (fn [db [_ _]]
-    (assoc db :mailbox-time (local-now))))
+    (assoc db :mailbox-time (date(local-now))))
 
 (rf/reg-event-db
   :paid-current-rent

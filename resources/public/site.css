@@ -69,6 +69,23 @@
     color: #d9534f;
 }
 
+.btn-success, .btn-danger:focus{
+    background-color: #5cb85c;
+    color: #fff;
+    border-color: #4cae4c
+}
+
+.btn-success:disabled, .btn-danger:disabled:hover{
+    background-color: #5cb85c;
+    color: #fff;
+    border-color: #4cae4c
+}
+
+.btn-success:hover{
+    background-color: #fff;
+    color: #5cb85c;
+}
+
 .btn-warning, .btn-warning:focus{
     background-color: #f0ad4e;
     color: #fff;
