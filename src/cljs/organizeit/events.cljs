@@ -92,7 +92,7 @@
 (rf/reg-event-db
   :update-mailbox
   (fn [db [_ _]]
-    (assoc db :mailbox-time (date(local-now))))
+    (assoc db :mailbox-time (local-now))))
 
 (rf/reg-event-db
   :paid-current-rent
