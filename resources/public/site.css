@@ -58,24 +58,18 @@
     border-color: #d43f3a
 }
 
-.btn-danger:disabled, .btn-danger:disabled:hover{
-    background-color: #d9534f;
-    color: #fff;
-    border-color: #d43f3a
-}
-
 .btn-danger:hover{
     background-color: #fff;
     color: #d9534f;
 }
 
-.btn-success, .btn-danger:focus{
+.btn-success, .btn-success:focus{
     background-color: #5cb85c;
     color: #fff;
     border-color: #4cae4c
 }
 
-.btn-success:disabled, .btn-danger:disabled:hover{
+.btn-success:disabled, .btn-success:disabled:hover{
     background-color: #5cb85c;
     color: #fff;
     border-color: #4cae4c

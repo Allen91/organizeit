@@ -5,7 +5,7 @@
             [cljs-time.format :as c-time-f]))
 
 (def common-formatter
-  (c-time-f/formatter-local "MMMM"))
+  (c-time-f/formatter "MMMM"))
 
 (def mailbox-formatter
   (c-time-f/formatter "MMMM dd, yyyy' at 'HH:mm"))
@@ -13,13 +13,13 @@
 (defn get-month
   [date-obj]
   (if date-obj
-    (c-time-f/unparse-local common-formatter date-obj)
+    (c-time-f/unparse common-formatter date-obj)
     "N/A"))
 
 (defn get-mailbox-time
   [date-obj]
   (if date-obj
-    (c-time-f/unparse-local mailbox-formatter date-obj)
+    (c-time-f/unparse mailbox-formatter date-obj)
     "N/A"))
 
 (rf/reg-sub
