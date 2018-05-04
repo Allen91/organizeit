@@ -138,3 +138,15 @@
       [rent-panel]
       [electricity-panel]
       [internet-panel]]]]])
+
+(defn error-page
+  []
+  [:div
+   [navigation]
+   "Error 404 - Hello" ])
+
+(defn success-page
+  []
+  [:div
+   [navigation]
+   "Success"])
