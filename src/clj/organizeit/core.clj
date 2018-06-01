@@ -16,6 +16,10 @@
         (t/reader :json)
         t/read)))
 
+(defn dump-n-pass [input]
+  (println input)
+  input)
+
 (defn transit-encode
   [payload]
   (let [output-stream (ByteArrayOutputStream.)
@@ -89,6 +93,90 @@
               db/update-electricity-now
               transit-encode)})
 
+(defn clear-store
+  [request]
+  {:status 200
+   :headers {"Content-Type" "application/transit+json"}
+   :body (->> request
+              :body
+              transit-decode
+              :store-id
+              db/clear-store
+              transit-encode)})
+
+(defn parse-stores
+  [stores]
+  (->>
+    (for [store stores]
+      {(:store_id store) (:store_name store)})
+    (apply merge-with conj)))
+
+(defn add-store
+  [request]
+  {:status 200
+   :headers {"Content-Type" "application/transit+json"}
+   :body (->> request
+              :body
+              transit-decode
+              :store
+              db/add-store
+              transit-encode)})
+
+(defn fetch-stores
+  [request]
+  {:status 200
+   :headers {"Content-Type" "application/transit+json"}
+   :body (->> (db/fetch-stores)
+              parse-stores
+              transit-encode)})
+
+(defn add-item
+  [request]
+  (let [body (->> request
+                  :body
+                  transit-decode)]
+    {:status 200
+     :headers {"Content-Type" "application/transit+json"}
+     :body (->> body
+                :item-name
+                db/add-item
+                ((keyword "last_insert_rowid()"))
+                (db/add-transaction (:store-id body) )
+                transit-encode)}))
+
+(defn check-item
+  [request]
+  (let [body (->> request
+                  :body
+                  transit-decode)]
+    {:status 200
+     :headers {"Content-Type" "application/transit+json"}
+     :body (->> (db/check-item (:store-id body) (:item-id body) (:bought body))
+                transit-encode)}))
+
+(defn check-all
+  [request]
+  {:status 200
+   :headers {"Content-Type" "application/transit+json"}
+   :body (->> request
+              :body
+              transit-decode
+              :store-id
+              db/check-all
+              transit-encode)})
+
+(defn clear-checked
+  [request]
+  {:status 200
+   :headers {"Content-Type" "application/transit+json"}
+   :body (->> request
+              :body
+              transit-decode
+              :store-id
+              dump-n-pass
+              db/clear-checked
+              transit-encode)})
+
 (defn fetch-mailbox
   [request]
   {:status 200
@@ -117,6 +205,37 @@
    :body (-> (db/get-electricity-now)
              transit-encode)})
 
+(defn parse-groceries
+  [groceries]
+  (->>
+    (for [grocery groceries]
+      (if (:item_id grocery)
+        {(:store_id grocery) {(:item_id grocery) {:name (:item_name grocery)
+                                                  :value (true? (= "true" (:bought grocery)))}}}
+        {(:store_id grocery) {}}))
+    (apply merge-with conj)))
+
+(defn fetch-groceries
+  [request]
+  {:status 200
+   :headers {"Content-Type" "application/transit+json"}
+   :body (->> (db/get-groceries-now)
+              parse-groceries
+              (hash-map :groceries)
+              transit-encode)})
+
+(defn fetch-store-groceries
+  [request]
+  {:status 200
+   :headers {"Content-Type" "application/transit+json"}
+   :body (->> request
+              :body
+              transit-decode
+              :store-id
+              (db/get-store-groceries-now)
+              parse-groceries
+              transit-encode)})
+
 (defn not-found-handler [_]
   "Handler to return 404 responses"
   (ring-r/not-found "Error 404: Could not find resource"))
@@ -131,7 +250,16 @@
    :fetch-electricity fetch-electricity
    :update-electricity update-electricity
    :fetch-internet fetch-internet
-   :update-internet update-internet})
+   :update-internet update-internet
+   :fetch-groceries fetch-groceries
+   :fetch-store-groceries fetch-store-groceries
+   :clear-store clear-store
+   :add-store add-store
+   :fetch-stores fetch-stores
+   :add-item add-item
+   :check-item check-item
+   :check-all check-all
+   :clear-checked clear-checked})
 
 (defn backend-handler
   [request]

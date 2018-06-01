@@ -16,51 +16,59 @@
      [bs/button {:on-click #(rf/dispatch [:load-page home-page])} "OrganizeIt!"]]]])
 
 (defn item-row
-  [store pos]
-  (let [name @(rf/subscribe [:item-name store pos])
-        bought @(rf/subscribe [:item-checkbox store pos])]
+  [store-id pos]
+  (let [name @(rf/subscribe [:item-name store-id pos])
+        bought @(rf/subscribe [:item-checkbox store-id pos])]
     [:tr
      [:td
       [:input.form-control {:type :text
                             :class "item-textbox"
                             :value name
-                            :on-change #(rf/dispatch [:update-item-name
-                                                      (.-target.value %)
-                                                      store
-                                                      pos])
-                            :on-blur #(rf/dispatch [:trim-item store])}]]
+                            :disabled true}]]
      [:td
       [bs/checkbox {:checked bought
                     :disabled (= name "")
-                    :on-change #(rf/dispatch [:update-item-value
-                                                  (.-target.checked %)
-                                                  store
-                                                  pos])}]]]))
+                    :on-change #(rf/dispatch [:check-item
+                                              (.-target.checked %)
+                                              store-id
+                                              pos])}]]]))
 
 (defn store-panel
-  [store]
-  (let [items-count-range @(rf/subscribe [:items-count-range store])
-        items-count @(rf/subscribe [:count-items store])]
-    [bs/panel {:header store :class :text-center}
+  [store-id]
+  (let [items-keys @(rf/subscribe [:items-keys store-id])
+        items-count @(rf/subscribe [:count-items store-id])
+        store-name @(rf/subscribe [:store-name store-id])
+        add-item-text @(rf/subscribe [:add-item-text store-id])]
+    [bs/panel {:header store-name :class :text-center}
      [bs/table {:class :text-left}
       [:thead
        [:tr
         [:th {:class "col-md-11"} "Item"]
         [:th "Bought?"]]]
       [:tbody
-       (for [pos items-count-range]
-         ^{:key (g-string/format "store-%s-item-%d" store pos)}
-         [item-row store pos])
+       (for [pos items-keys]
+         ^{:key (g-string/format "store-%s-item-%d" store-id pos)}
+         [item-row store-id pos])
+       [:tr
+        [:td
+         [:input.form-control {:type :text
+                               :class "item-textbox"
+                               :value add-item-text
+                               :on-change #(rf/dispatch [:update-item-text store-id (.-target.value %)])}]]
+        [:td {:class "store-button-col"}
+         [bs/button {:class :btn-primary
+                     :disabled (= add-item-text "")
+                     :on-click #(rf/dispatch [:add-item store-id add-item-text])} "Add Item"]]]
        [:tr
         [:td
          [bs/button {:class :btn-danger
-                     :on-click #(rf/dispatch [:clear-store store])} "Clear Store"]
+                     :on-click #(rf/dispatch [:clear-store store-id])} "Clear Store"]
          [bs/button {:class "btn-warning margin-left-20"
-                     :on-click #(rf/dispatch [:clear-checked store])
+                     :on-click #(rf/dispatch [:clear-checked store-id])
                      :disabled (= items-count 0)} "Clear Checked"]]
         [:td
          [bs/button {:class :btn-success
-                     :on-click #(rf/dispatch [:check-all store])
+                     :on-click #(rf/dispatch [:check-all store-id])
                      :disabled (= items-count 0)} "Check All"]]]]]]))
 
 (defn add-store-panel
@@ -111,9 +119,9 @@
   []
   (let [stores  @(rf/subscribe [:store-keys])]
     [bs/panel {:header "Groceries"  :class :text-center}
-     (for [store stores]
-       ^{:key (g-string/format "store-%s" store)}
-       [store-panel store])
+     (for [store-id stores]
+       ^{:key (g-string/format "store-%s" store-id)}
+       [store-panel store-id])
      [add-store-panel]]))
 
 (defn home-page
@@ -143,10 +151,4 @@
   []
   [:div
    [navigation]
-   "Error 404 - Hello" ])
-
-(defn success-page
-  []
-  [:div
-   [navigation]
-   "Success"])
+   "Something went wrong. Please inform Allen about this issue and help him improve the Application." ])

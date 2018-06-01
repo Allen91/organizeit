@@ -8,6 +8,12 @@
 
 (defn main []
   (rf/dispatch-sync [:initialize])
+  (rf/dispatch [:get-groceries])
+  (rf/dispatch [:get-stores])
+  (rf/dispatch [:fetch-mailbox])
+  (rf/dispatch [:fetch-electricity])
+  (rf/dispatch [:fetch-rent])
+  (rf/dispatch [:fetch-internet])
   (r/render-component [views/router]
                       (.getElementById js/document "app")))
 

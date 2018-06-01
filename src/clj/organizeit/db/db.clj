@@ -38,3 +38,45 @@
 (defn get-electricity-now
   []
   (get-electricity conn {:group_id 1}))
+
+(defn get-groceries-now
+  []
+  (get-groceries conn {:group_id 1}))
+
+(defn get-store-groceries-now
+  [store_id]
+  (get-store-groceries conn {:group_id 1 :store_id store_id}))
+
+(defn add-store
+  [store-name]
+  (insert-store conn {:store_name store-name :group_id 1}))
+
+(defn fetch-stores
+  []
+  (get-stores conn {:group_id 1}))
+
+(defn add-transaction
+  [store-id item-id]
+  (insert-transaction conn {:store_id store-id :item_id item-id}))
+
+(defn add-item
+  [item-name]
+  (insert-item conn {:item_name item-name}))
+
+(defn clear-store
+  [store-id]
+  (delete-store conn {:store_id store-id}))
+
+(defn check-item
+  [store-id item-id bought]
+  (update-transaction conn {:store_id store-id :item_id item-id :bought (if bought
+                                                                          "true"
+                                                                          "false")}))
+
+(defn check-all
+  [store-id]
+  (update-transactions-store conn {:store_id store-id}))
+
+(defn clear-checked
+  [store-id]
+  (delete-transactions-store conn {:store_id store-id}))

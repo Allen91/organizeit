@@ -20,18 +20,32 @@
      :electricity-last-paid nil
      :internet-last-paid nil
      :add-store-text ""
+     :add-item-text {}
      :api-result nil
-     :groceries {"HEB" {0 {:name "milk" :value false} 1 {:name "sugar" :value true}} "Indian Store" {0 {:name "paneer" :value false}} "Walmart" {}}}))
+     :stores {}
+     :groceries {}}))
 
-(rf/reg-event-db
-  :update-item-name
-  (fn [db [_ new-value store pos]]
-    (assoc-in db [:groceries store pos :name] new-value)))
+(rf/reg-event-fx
+  :get-groceries
+  (fn [world _]
+    (send-request :post :fetch-groceries {} :groceries-success)))
 
-(rf/reg-event-db
-  :update-item-value
-  (fn [db [_ new-value store pos]]
-    (assoc-in db [:groceries store pos :value] new-value)))
+(rf/reg-event-fx
+  :get-stores
+  (fn [world _]
+    (send-request :post :fetch-stores {} :stores-success)))
+
+(rf/reg-event-fx
+  :check-item
+  (fn [world [_ bought store-id item-id]]
+    {:http-xhrio {:method :post
+                  :uri (bidi/path-for routes/routes :check-item)
+                  :request-timeout 5000
+                  :params          {:store-id store-id :item-id item-id :bought bought}
+                  :format          (ajax/transit-request-format)
+                  :response-format (ajax/transit-response-format)
+                  :on-success      [:get-store-groceries store-id]
+                  :on-failure      [:bad-post-result]}}))
 
 (rf/reg-event-db
   :load-page
@@ -44,55 +58,76 @@
     (assoc db :add-store-text text)))
 
 (rf/reg-event-db
+  :update-item-text
+  (fn [db [_ store-id text]]
+    (assoc-in db [:add-item-text store-id] text)))
+
+(rf/reg-event-fx
   :clear-store
-  (fn [db [_ store]]
-    (update db :groceries dissoc store)))
+  (fn [world [_ id]]
+    (send-request :post :clear-store {:store-id id} :get-groceries)))
 
-(defn update-item-keys
-  [old-map]
-  (zipmap (range (count old-map)) (vals old-map)))
-
-(rf/reg-event-db
-  :check-all
-  (fn [db [_ name]]
-    (let [store-items (get-in db [:groceries name])]
-      (->> store-items
-           (map #(assoc (second %) :value true))
-           (zipmap (range (count store-items)))
-           (assoc-in db [:groceries name])))))
-
-(rf/reg-event-db
-  :clear-checked
-  (fn [db [_ name]]
-    (let [store-items (get-in db [:groceries name])]
-      (->> store-items
-           (remove #(true? (:value (second %))))
-           (into {})
-           (update-item-keys)
-           (assoc-in db [:groceries name])))))
-
-(rf/reg-event-db
-  :trim-item
-  (fn [db [_ name]]
-    (let [store-items (get-in db [:groceries name])]
-      (->> store-items
-           (remove #(= "" (:name (second %))))
-           (into {})
-           (update-item-keys)
-           (assoc-in db [:groceries name])))))
-
-(rf/reg-event-db
+(rf/reg-event-fx
   :add-store
-  (fn [db [_ new-store]]
-    (-> db
-        (assoc :groceries (conj (:groceries db) {new-store {}}))
-        (assoc :add-store-text ""))))
+  (fn [world [_ store]]
+    {:http-xhrio [{:method :post
+                   :uri (bidi/path-for routes/routes :add-store)
+                   :request-timeout 5000
+                   :params          {:store store}
+                   :format          (ajax/transit-request-format)
+                   :response-format (ajax/transit-response-format)
+                   :on-success      [:get-stores]
+                   :on-failure      [:bad-post-result]}
+                  {:method :post
+                   :uri (bidi/path-for routes/routes :fetch-groceries)
+                   :request-timeout 5000
+                   :params          {}
+                   :format          (ajax/transit-request-format)
+                   :response-format (ajax/transit-response-format)
+                   :on-success      [:groceries-success]
+                   :on-failure      [:bad-post-result]}]}))
 
-(rf/reg-event-db
+(rf/reg-event-fx
+  :check-all
+  (fn [world [_ store-id]]
+    {:http-xhrio {:method :post
+                  :uri (bidi/path-for routes/routes :check-all)
+                  :request-timeout 5000
+                  :params          {:store-id store-id}
+                  :format          (ajax/transit-request-format)
+                  :response-format (ajax/transit-response-format)
+                  :on-success      [:get-store-groceries store-id]
+                  :on-failure      [:bad-post-result]}}))
+
+(rf/reg-event-fx
+  :clear-checked
+  (fn [world [_ store-id]]
+    (send-request :post :clear-checked {:store-id store-id} :get-groceries)))
+
+(rf/reg-event-fx
   :add-item
-  (fn [db [_ store new-item]]
-    (let [pos (count (get-in db [:groceries store]))]
-    (assoc-in db [:groceries store] (conj (get-in db [:groceries store]) {(+ pos 1) {:name new-item :value false}})))))
+  (fn [world [_ store_id item-name]]
+    (if (not= item-name "")
+      {:http-xhrio {:method :post
+                     :uri (bidi/path-for routes/routes :add-item)
+                     :request-timeout 5000
+                     :params          {:store-id store_id :item-name item-name}
+                     :format          (ajax/transit-request-format)
+                     :response-format (ajax/transit-response-format)
+                     :on-success      [:get-store-groceries store_id]
+                     :on-failure      [:bad-post-result]}})))
+
+(rf/reg-event-fx
+  :get-store-groceries
+  (fn [world [_ store_id]]
+    {:http-xhrio {:method :post
+                  :uri (bidi/path-for routes/routes :fetch-store-groceries)
+                  :request-timeout 5000
+                  :params          {:store-id store_id}
+                  :format          (ajax/transit-request-format)
+                  :response-format (ajax/transit-response-format)
+                  :on-success      [:store-success]
+                  :on-failure      [:bad-post-result]}}))
 
 (defn send-request
   [method-type uri-path params success]
@@ -108,7 +143,7 @@
 (rf/reg-event-db
   :mailbox-success
   (fn [db [_ result]]
-    (assoc db :mailbox-time (UtcDateTime.fromIsoString (:mailbox result)))))
+    (assoc db :mailbox-time (to-default-time-zone (UtcDateTime.fromIsoString (:mailbox result))))))
 
 (rf/reg-event-db
   :bad-post-result
@@ -184,3 +219,25 @@
   :paid-next-electricity
   (fn [world _]
     (send-request :post :update-electricity {:months 1} :fetch-electricity)))
+
+(rf/reg-event-db
+  :groceries-success
+  (fn [db [_ result]]
+    (assoc db :groceries (:groceries result))))
+
+(rf/reg-event-db
+  :store-success
+  (fn [db [_ result]]
+    (let [store (first result)
+          key (key store)
+          value (val store)]
+      (-> db
+          (assoc-in [:groceries key] value)
+          (assoc-in [:add-item-text key] "")))))
+
+(rf/reg-event-db
+  :stores-success
+  (fn [db [_ result]]
+    (-> db
+        (assoc :stores result)
+        (assoc :add-store-text ""))))

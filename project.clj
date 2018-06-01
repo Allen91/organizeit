@@ -20,7 +20,6 @@
                  [ring/ring-defaults "0.3.1"]
                  [day8.re-frame/http-fx "0.1.4"]
                  [org.immutant/web "2.1.9"]]
-  :plugins [[migratus-lein "0.5.1"]]
   :resource-paths ["resources/public/"]
   :source-paths ["src/clj" "src/cljc" "env/dev"]
   :cljsbuild {
@@ -44,9 +43,4 @@
              :server-port 3448 ;; default
              :server-ip "0.0.0.0"
              :nrepl-port 7003
-             :ring-handler organizeit.core/backend-handler}
-  :migratus {:store :database
-             :migration-dir "migrations"
-             :db {:classname "org.sqlite.JDBC"
-                  :subprotocol "sqlite"
-                  :subname "src/clj/organizeit/db/organizeit.db"}})
+             :ring-handler organizeit.core/backend-handler})
