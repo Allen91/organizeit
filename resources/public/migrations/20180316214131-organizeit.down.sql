@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS 'users';
+--;;
+DROP TABLE IF EXISTS 'enrollments';
+--;;
+DROP TABLE IF EXISTS 'groups';
+--;;
+DROP TABLE IF EXISTS 'utilities';
+--;;
+DROP TABLE IF EXISTS 'stores';
+--;;
+DROP TABLE IF EXISTS 'items';
+--;;
+DROP TABLE IF EXISTS 'transactions';
+--;;
+DROP TABLE IF EXISTS 'foo';
+--;;
